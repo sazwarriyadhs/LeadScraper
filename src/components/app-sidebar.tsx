@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Bot, LayoutDashboard, Search, Settings, User } from 'lucide-react';
 import {
-  Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
@@ -12,11 +11,10 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
-export function AppSidebar(props: ComponentProps<typeof Sidebar>) {
+export function AppSidebar(props: ComponentProps<'div'>) {
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
 
@@ -31,7 +29,7 @@ export function AppSidebar(props: ComponentProps<typeof Sidebar>) {
       <SidebarContent className="flex-1">
         <SidebarMenu>
           <SidebarMenuItem>
-            <Link href="/dashboard" legacyBehavior passHref>
+            <Link href="/dashboard">
               <SidebarMenuButton
                 isActive={isActive('/dashboard')}
                 tooltip="Dashboard"
@@ -42,7 +40,7 @@ export function AppSidebar(props: ComponentProps<typeof Sidebar>) {
             </Link>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <Link href="/leads" legacyBehavior passHref>
+            <Link href="/leads">
               <SidebarMenuButton isActive={isActive('/leads')} tooltip="Leads">
                 <Search />
                 <span>Leads</span>
