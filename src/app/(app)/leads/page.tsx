@@ -25,8 +25,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Star, Building, Users, DollarSign } from 'lucide-react';
 import { format } from 'date-fns';
+import { LeadInfoDialog } from '@/components/leads/lead-info-dialog';
 
 export default function LeadsPage() {
   const [leads, setLeads] = useState<Lead[]>(mockLeads);
@@ -162,7 +162,9 @@ export default function LeadsPage() {
                         data-ai-hint="logo"
                       />
                       <div>
-                        <p className="font-semibold">{lead.companyName}</p>
+                        <LeadInfoDialog lead={lead}>
+                          <p className="font-semibold hover:underline cursor-pointer">{lead.companyName}</p>
+                        </LeadInfoDialog>
                         <p className="text-xs text-muted-foreground">{lead.hq}</p>
                       </div>
                     </div>
