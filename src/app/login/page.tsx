@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Bot } from 'lucide-react';
+import { Mountain } from 'lucide-react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -38,7 +38,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <Bot className="w-12 h-12 text-primary" />
+            <Mountain className="w-12 h-12 text-primary" />
           </div>
           <CardTitle>Caprae LeadScraper</CardTitle>
           <CardDescription>Admin Login</CardDescription>

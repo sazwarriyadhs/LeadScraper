@@ -2,7 +2,7 @@
 import type { ComponentProps } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Bot, LayoutDashboard, LogOut, Search } from 'lucide-react';
+import { LayoutDashboard, LogOut, Mountain, Search } from 'lucide-react';
 import {
   SidebarContent,
   SidebarHeader,
@@ -27,7 +27,7 @@ export function AppSidebar(props: ComponentProps<'div'>) {
     <div className="flex h-full flex-col" {...props}>
       <SidebarHeader>
         <div className="flex items-center gap-2 p-2">
-          <Bot className="w-8 h-8 text-primary" />
+          <Mountain className="w-8 h-8 text-primary" />
           <h1 className="text-lg font-semibold text-primary">Caprae LeadScraper</h1>
         </div>
       </SidebarHeader>
@@ -57,7 +57,7 @@ export function AppSidebar(props: ComponentProps<'div'>) {
       <SidebarFooter>
         <div className="flex items-center gap-3 p-3 rounded-lg bg-card shadow-sm">
           <Avatar>
-            <AvatarImage src="https://placehold.co/40x40.png" alt="User" />
+            <AvatarImage src="https://placehold.co/40x40.png" alt="User" data-ai-hint="logo"/>
             <AvatarFallback>CC</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
