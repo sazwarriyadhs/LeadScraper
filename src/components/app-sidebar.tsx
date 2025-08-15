@@ -1,8 +1,8 @@
 'use client';
 import type { ComponentProps } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Bot, LayoutDashboard, Search, Settings, User } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Bot, LayoutDashboard, LogOut, Search } from 'lucide-react';
 import {
   SidebarContent,
   SidebarHeader,
@@ -16,7 +16,12 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 export function AppSidebar(props: ComponentProps<'div'>) {
   const pathname = usePathname();
+  const router = useRouter();
   const isActive = (path: string) => pathname === path;
+
+  const handleLogout = () => {
+    router.push('/login');
+  };
 
   return (
     <div className="flex h-full flex-col" {...props}>
@@ -59,8 +64,8 @@ export function AppSidebar(props: ComponentProps<'div'>) {
             <span className="font-semibold text-sm">Caprae Capital</span>
             <span className="text-xs text-muted-foreground">Admin</span>
           </div>
-          <Button variant="ghost" size="icon" className="ml-auto">
-            <Settings className="w-5 h-5" />
+          <Button variant="ghost" size="icon" className="ml-auto" onClick={handleLogout}>
+            <LogOut className="w-5 h-5" />
           </Button>
         </div>
       </SidebarFooter>
