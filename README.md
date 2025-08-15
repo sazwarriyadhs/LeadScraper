@@ -32,3 +32,8 @@ For more details on the features, see the `feature.md` file.
 ## Project Structure
 
 The project follows a standard Next.js App Router structure. For a detailed explanation of the directory layout, please refer to the `MONOREPO_LAYOUT.md` file.
+
+## Author
+
+- **Azwar Riyadh Subarkah** - Full Stack Developer
+- **Company**: Caprae Capital Partners
