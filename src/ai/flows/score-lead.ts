@@ -12,6 +12,7 @@ import {z} from 'genkit';
 const ScoreLeadInputSchema = z.object({
   companyName: z.string().describe('The name of the company.'),
   companyDescription: z.string().describe('A description of the company.'),
+  website: z.string().describe('The website of the company.'),
   industry: z.string().describe('The industry of the company.'),
   location: z.string().describe('The location of the company.'),
   employeeCount: z.number().describe('The number of employees at the company.'),
@@ -39,12 +40,13 @@ const scoreLeadPrompt = ai.definePrompt({
   Based on the following company information, generate a lead score from 0 to 100 and a reason for the score.
 
   Company Name: {{{companyName}}}
+  Company Website: {{{website}}}
   Company Description: {{{companyDescription}}}
   Industry: {{{industry}}}
   Location: {{{location}}}
   Employee Count: {{{employeeCount}}}
 
-  Consider the company size, industry, and description when generating the lead score.`,
+  Consider the company's website, size, industry, and description when generating the lead score.`,
 });
 
 const scoreLeadFlow = ai.defineFlow(

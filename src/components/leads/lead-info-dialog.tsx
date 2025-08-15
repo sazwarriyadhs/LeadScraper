@@ -3,6 +3,7 @@ import {
   Building2,
   DollarSign,
   FileText,
+  Globe,
   Hash,
   MapPin,
   Users,
@@ -18,6 +19,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import type { Lead } from '@/lib/types';
+import { Button } from '../ui/button';
 
 interface LeadInfoDialogProps {
   lead: Lead;
@@ -30,7 +32,14 @@ export function LeadInfoDialog({ lead, children }: LeadInfoDialogProps) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{lead.companyName}</DialogTitle>
+          <div className="flex items-center gap-4">
+            <DialogTitle>{lead.companyName}</DialogTitle>
+            <Button variant="ghost" size="icon" asChild>
+              <a href={lead.website} target="_blank" rel="noopener noreferrer">
+                <Globe className="h-4 w-4" />
+              </a>
+            </Button>
+          </div>
           <DialogDescription>
             Detailed information about the lead.
           </DialogDescription>
@@ -59,15 +68,15 @@ export function LeadInfoDialog({ lead, children }: LeadInfoDialogProps) {
                 {lead.hq}
               </span>
             </div>
-             <div className="flex items-start gap-2 pt-2">
-                <Hash className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
-                <div className="flex flex-wrap gap-1">
+            <div className="flex items-start gap-2 pt-2">
+              <Hash className="h-4 w-4 text-muted-foreground mt-0.5 shrink-0" />
+              <div className="flex flex-wrap gap-1">
                 {lead.keywords.map((keyword) => (
                   <Badge key={keyword} variant="secondary">
                     {keyword}
                   </Badge>
                 ))}
-                </div>
+              </div>
             </div>
           </div>
         </div>

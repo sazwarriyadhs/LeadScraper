@@ -2,6 +2,7 @@ export type Lead = {
   id: string;
   companyName: string;
   logoUrl: string;
+  website: string;
   companyDescription: string;
   arr: number;
   employeeCount: number;

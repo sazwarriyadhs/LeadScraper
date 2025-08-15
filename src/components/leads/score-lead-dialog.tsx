@@ -16,7 +16,7 @@ import {
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import type { Lead } from '@/lib/types';
-import { Bot, Building2, Calendar, FileText, Users } from 'lucide-react';
+import { Bot, Building2, Calendar, FileText, Users, Globe } from 'lucide-react';
 
 interface ScoreLeadDialogProps {
   lead: Lead;
@@ -40,6 +40,7 @@ export function ScoreLeadDialog({ lead, onScoreUpdate }: ScoreLeadDialogProps) {
     const input: ScoreLeadInput = {
       companyName: lead.companyName,
       companyDescription: lead.companyDescription,
+      website: lead.website,
       industry: lead.industry,
       location: lead.hq,
       employeeCount: lead.employeeCount,
@@ -91,7 +92,14 @@ export function ScoreLeadDialog({ lead, onScoreUpdate }: ScoreLeadDialogProps) {
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2 rounded-lg border p-4">
-            <h4 className="font-semibold text-primary">{lead.companyName}</h4>
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold text-primary">{lead.companyName}</h4>
+              <Button variant="ghost" size="icon" asChild>
+                <a href={lead.website} target="_blank" rel="noopener noreferrer">
+                  <Globe className="h-4 w-4" />
+                </a>
+              </Button>
+            </div>
             <p className="text-sm text-muted-foreground flex items-center gap-2">
               <FileText className="h-4 w-4" />
               {lead.companyDescription}
