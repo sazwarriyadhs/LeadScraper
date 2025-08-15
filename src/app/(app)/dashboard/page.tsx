@@ -112,6 +112,35 @@ export default function DashboardPage() {
     doc.save('leads-report.pdf');
   };
 
+  const downloadMarkdown = () => {
+    const headers = ['Company Name', 'Industry', 'Employees', 'ARR', 'Score', 'Reason'];
+    const tableHeader = `| ${headers.join(' | ')} |`;
+    const tableDivider = `|${headers.map(() => '---').join('|')}|`;
+
+    const tableRows = mockLeads.map(lead => {
+      const row = [
+        lead.companyName,
+        lead.industry,
+        lead.employeeCount,
+        `$${(lead.arr / 1000000).toFixed(1)}M`,
+        lead.score ?? 'N/A',
+        lead.reason || '',
+      ];
+      return `| ${row.join(' | ')} |`;
+    }).join('\n');
+
+    const markdownString = `# Leads Report\n\n${tableHeader}\n${tableDivider}\n${tableRows}`;
+    const blob = new Blob([markdownString], { type: 'text/markdown' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'leads-report.md');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
 
   return (
     <div className="flex-1 space-y-4">
@@ -130,6 +159,10 @@ export default function DashboardPage() {
           <Button onClick={downloadCSV} variant="outline" size="sm">
             <Download className="mr-2 h-4 w-4" />
             Export CSV
+          </Button>
+           <Button onClick={downloadMarkdown} variant="outline" size="sm">
+            <Download className="mr-2 h-4 w-4" />
+            Export Markdown
           </Button>
         </div>
       </div>
@@ -175,3 +208,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+
