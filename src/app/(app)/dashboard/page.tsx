@@ -1,3 +1,6 @@
+
+'use client';
+
 import { mockLeads } from '@/lib/mock-data';
 import { StatsCards } from '@/components/dashboard/stats-cards';
 import { IndustryChart } from '@/components/dashboard/industry-chart';
@@ -6,6 +9,10 @@ import type { Lead } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScoreDistributionChart } from '@/components/dashboard/score-distribution-chart';
 import { ArrByIndustryChart } from '@/components/dashboard/arr-by-industry-chart';
+import { Button } from '@/components/ui/button';
+import { Download } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 export default function DashboardPage() {
   const scoredLeads = mockLeads.filter((lead) => lead.score !== undefined);
@@ -53,9 +60,79 @@ export default function DashboardPage() {
     arr: arr / 1000000, // Convert to millions
   }));
 
+  const downloadCSV = () => {
+    const headers = [
+      'Company Name',
+      'Industry',
+      'Employees',
+      'ARR',
+      'Score',
+      'Reason',
+    ];
+    const csvRows = [headers.join(',')];
+
+    mockLeads.forEach((lead) => {
+      const row = [
+        `"${lead.companyName.replace(/"/g, '""')}"`,
+        `"${lead.industry}"`,
+        lead.employeeCount,
+        lead.arr,
+        lead.score ?? 'N/A',
+        `"${(lead.reason || '').replace(/"/g, '""')}"`,
+      ];
+      csvRows.push(row.join(','));
+    });
+
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'leads.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    doc.text('Leads Report', 14, 16);
+    (doc as any).autoTable({
+      startY: 20,
+      head: [['Company Name', 'Industry', 'Employees', 'ARR', 'Score']],
+      body: mockLeads.map((lead) => [
+        lead.companyName,
+        lead.industry,
+        lead.employeeCount,
+        `$${(lead.arr / 1000000).toFixed(1)}M`,
+        lead.score ?? 'N/A',
+      ]),
+    });
+    doc.save('leads-report.pdf');
+  };
+
 
   return (
     <div className="flex-1 space-y-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+          <p className="text-muted-foreground">
+            Here's a summary of your leads.
+          </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button onClick={downloadPDF} variant="outline" size="sm">
+            <Download className="mr-2 h-4 w-4" />
+            Export PDF
+          </Button>
+          <Button onClick={downloadCSV} variant="outline" size="sm">
+            <Download className="mr-2 h-4 w-4" />
+            Export CSV
+          </Button>
+        </div>
+      </div>
       <StatsCards
         totalLeads={totalLeads}
         scoredLeadsCount={scoredLeads.length}
